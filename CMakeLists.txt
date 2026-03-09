@@ -53,7 +53,7 @@ target_link_libraries(shape_mvc app_lib)
 enable_testing()
 set(TESTING_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/testing/lib")
 find_library(TESTING_FRAMEWORK_LIB 
-    NAMES testing testing
+    NAMES testing
     PATHS ${TESTING_LIB_DIR}
     REQUIRED
     NO_DEFAULT_PATH
