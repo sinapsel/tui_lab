@@ -2,3 +2,4 @@ build/*
 testing/build/*
 testing/lib/*
 obj/*
+.vscode/

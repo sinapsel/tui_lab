@@ -1,4 +1,4 @@
-#pragma once
+#include "canvas.h"
 
 typedef struct Canvas {
     void (*draw_point)(struct Canvas* self, int x, int y, char ch);
@@ -6,4 +6,8 @@ typedef struct Canvas {
     void (*draw_text)(struct Canvas* self, int x, int y, const char* text);
 } Canvas;
 
-void draw_text(struct Canvas* self, int x, int y, const char* text);
+void __wrap_draw_text(Canvas* self, int x, int y, const char* text) {
+   ((MockedCanvas*)self)->drawed_text = text;
+}
+
+extern void __real_draw_text(Canvas* self, int x, int y, const char* text);

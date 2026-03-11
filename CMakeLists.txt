@@ -26,6 +26,7 @@ add_library(app_lib STATIC
     src/models/rectangle.c
     src/models/circle.c
     src/models/triangle.c
+    src/canvas.c
     src/view.c
 )
 target_include_directories(app_lib 
@@ -51,46 +52,44 @@ target_link_libraries(shape_mvc app_lib)
 
 
 enable_testing()
-set(TESTING_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/testing/lib")
-find_library(TESTING_FRAMEWORK_LIB 
-    NAMES testing
-    PATHS ${TESTING_LIB_DIR}
-    REQUIRED
-    NO_DEFAULT_PATH
-)
-find_library(TESTING_MOCKS_LIB
-    NAMES mocks
-    PATHS ${TESTING_LIB_DIR}
-    REQUIRED
-    NO_DEFAULT_PATH
-)
-find_path(TESTING_INCLUDE_DIR 
-    NAMES "testing.h" "assertions.h"
-    PATHS "${CMAKE_CURRENT_SOURCE_DIR}/testing/include"
-    REQUIRED
-)
 
-add_executable(test_model
-    tests/test_model.c
+add_subdirectory(tests/mocks)
+add_subdirectory(t3sting)
+
+
+
+
+add_executable(test_model 
     tests/main.c
+    tests/test_model.c
 )
-
-target_include_directories(test_model 
-    PRIVATE
-    ${TESTING_INCLUDE_DIR}               # Заголовки фреймворка тестирования
-    ${CMAKE_CURRENT_SOURCE_DIR}/include  # Заголовки тестируемой библиотеки
-)
-
 target_link_libraries(test_model 
     PRIVATE
-    app_lib                     # Тестируемая библиотека
-    ${TESTING_FRAMEWORK_LIB}    # Кастомный фреймворк тестирования
+    app_lib         # Тестируемая библиотека
+    t3st            # Кастомный фреймворк тестирования
+    mocks           # Моки вызовов
 )
 target_link_options(test_model PRIVATE 
-    "LINKER:--wrap,abort"
-)
-target_link_libraries(test_model
-    PRIVATE
-    ${TESTING_MOCKS_LIB}
+    "LINKER:--wrap,abort"       # Подменяем abort для t3st
+    "LINKER:--wrap,draw_text"   # Кастомный мок из mocks
 )
 add_test(NAME test_model COMMAND test_model)
+
+
+
+
+add_executable(test_model_circle 
+    tests/main.c
+    tests/test_model_circle.c
+)
+target_link_libraries(test_model_circle 
+    PRIVATE
+    app_lib         # Тестируемая библиотека
+    t3st            # Кастомный фреймворк тестирования
+    mocks           # Моки вызовов
+)
+target_link_options(test_model_circle PRIVATE 
+    "LINKER:--wrap,abort"       # Подменяем abort для t3st
+    "LINKER:--wrap,draw_text"   # Кастомный мок из mocks
+)
+add_test(NAME test_model_circle COMMAND test_model_circle)

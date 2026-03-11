@@ -16,7 +16,7 @@ static void circle_draw(Shape* self, Canvas* canvas, int x, int y) {
     Circle* c = (Circle*)self;
     int r = (int)c->radius;
     if (r <= 0) {
-        canvas->draw_text(canvas, x, y, "Invalid radius");
+        draw_text(canvas, x, y, "Invalid radius");
         return;
     }
     for (int dy = -r; dy <= r; dy++) {

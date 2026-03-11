@@ -18,7 +18,7 @@ static void rectangle_draw(Shape* self, Canvas* canvas, int x, int y) {
     int w = (int)r->width;
     int h = (int)r->height;
     if (w <= 0 || h <= 0) {
-        canvas->draw_text(canvas, x, y, "Invalid size");
+        draw_text(canvas, x, y, "Invalid size");
         return;
     }
     for (int i = 0; i < w; i++) {

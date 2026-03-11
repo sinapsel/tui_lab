@@ -18,7 +18,7 @@ static void triangle_draw(Shape* self, Canvas* canvas, int x, int y) {
     int w = (int)t->base_len;
     int h = (int)t->height;
     if (w <= 0 || h <= 0) {
-        canvas->draw_text(canvas, x, y, "Invalid size");
+        draw_text(canvas, x, y, "Invalid size");
         return;
     }
     for (int row = 0; row < h; row++) {
