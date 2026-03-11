@@ -1,0 +1,3 @@
+[submodule "t3sting"]
+	path = t3sting
+	url = https://github.com/sinapsel/t3sting.git
